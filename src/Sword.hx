@@ -1,3 +1,4 @@
+import hxd.res.Sound;
 import h2d.Anim;
 import h2d.col.Point;
 import h2d.Graphics;
@@ -11,12 +12,16 @@ class Sword extends Weapon {
     var DAMAGE = 10;
 
     var anim : Anim;
+    var hitSound : Sound;
 
     public function new(parent : Object, game : Main) {
         super(parent);
 
         this.game = game;
         this.graphics = new h2d.Graphics(this.game.camera);
+        this.type = Sword;
+
+        this.hitSound = hxd.Res.sfx_sword_hit;
 
         var spriteSheet = hxd.Res.sword_swing.toTile();
         var sprites = spriteSheet.gridFlatten(16);
@@ -31,6 +36,7 @@ class Sword extends Weapon {
 
     public override function attack(owner : Entity, target : Entity) {
         this.anim.pause = false;
+        this.canAttack = false;
 
         var forward = new Point(Math.sin(owner.rotation), -Math.cos(owner.rotation));
         forward.normalize();
@@ -40,11 +46,13 @@ class Sword extends Weapon {
         var circle : Circle = new Circle(circleX, circleY, 7.);
         if (circle.collideBounds(game.enemy.getBounds(this.game.camera))) {
             target.takeDamage(this.DAMAGE);
+            hitSound.play(false);
         }
     }
 
     function onSwingEnd() {
         this.anim.currentFrame = 0;
         this.anim.pause = true;
+        this.canAttack = true;
     }
 }

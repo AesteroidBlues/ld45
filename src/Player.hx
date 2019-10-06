@@ -26,6 +26,9 @@ class Player extends Entity {
         bitmap.tile.dy -= 8;
 
         this.graphics = new Graphics(this.game.camera);
+        this.onDeath = function() {
+            game.init();
+        }
     }
 
     public override function update(dt : Float) {
@@ -96,6 +99,10 @@ class Player extends Entity {
 
         for (p in this.game.pickups) {
             if (spriteBounds.intersects(p.getBounds(this.game.camera))) {
+                if (game.enemy.weapon == null && this.weapon == null) {
+                    game.switchMusic(game.playerWeaponFirstMusic);
+                }
+
                 p.onPickup(this);
             }
         }

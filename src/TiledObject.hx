@@ -8,6 +8,7 @@ class TiledObject {
     public var height : Int;
 
     public var properties : Map<String, TiledProperty>;
+    public var text : String;
 
     public function new(xml : Xml) {
         properties = new Map<String, TiledProperty>();
@@ -38,6 +39,9 @@ class TiledObject {
                     var property = new TiledProperty(p);
                     properties.set(property.name, property);
                 }
+            }
+            if (c.nodeName == "text") {
+                this.text = c.firstChild().nodeValue;
             }
         }
     }

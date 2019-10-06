@@ -1,3 +1,6 @@
+import hxd.res.DefaultFont;
+import h2d.Text;
+import hxd.res.Sound;
 import hxd.res.TiledMap.TiledMapData;
 import hxd.App;
 import hxd.Res;
@@ -21,13 +24,28 @@ class Main extends App {
 
     public var updateables : Array<Entity>;
 
-    override function init() {
+    public var startMusic : Sound;
+    public var playerWeaponFirstMusic : Sound;
+    public var enemyWeaponMusic : Sound;
+
+    public var currentMusic : Sound;
+
+    public override function init() {
         s2d.scaleMode = Stretch(sceneWidth, sceneHeight);
 
         engine.backgroundColor = 0x333333;
 
+        startMusic = hxd.Res.spook2;
+        playerWeaponFirstMusic = hxd.Res.spook;
+        enemyWeaponMusic = hxd.Res.combat;
+
+        switchMusic(startMusic);
+
+
         pickups = new Array<Powerup>();
         updateables = new Array<Entity>();
+
+        s2d.removeChildren();
 
         this.map = new TiledMap(Res.arena.entry.getBytes().toString());
         var tiles = hxd.Res.tileset.toTile();
@@ -43,6 +61,15 @@ class Main extends App {
             }
             if (obj.name == "enemy_spawn") {
                 enemyStart = obj;
+            }
+        }
+
+        for (t in map.objects["text"].objects) {
+            if (t.text.length > 0) {
+                var text = new Text(DefaultFont.get(), camera);
+                text.x = t.x;
+                text.y = t.y;
+                text.text = t.text;
             }
         }
 
@@ -71,24 +98,33 @@ class Main extends App {
         this.camera.viewY = roomY * ROOM_HEIGHT * TILE_SIZE;
     }
 
+    public function switchMusic(newSound : Sound, loop : Bool = true) {
+        if (currentMusic != null) {
+            currentMusic.stop();
+        }
+
+        currentMusic = newSound;
+        newSound.play(loop);
+    }
+
     function drawLayer(map : TiledMap, tiles : h2d.Tile, layer : Int, size : Int, parent : Object) {
-		var tileGroup = new h2d.TileGroup(tiles, parent);
-		var tileSetArray = tiles.gridFlatten(TILE_SIZE, 0, 0);
-		if( map.layers.length > 0 && layer < map.layers.length ) {
-			var tileX = 0;
-			var tileY = 0;
-			for(tile in map.layers[layer].data.tiles) {
-				// Tiled stores empty tiles as 0 and offsets the tileId by 1 so we must skip empty tiles and adjust the tileId back to the proper index 
-				var tileId = tile.gid;
+        var tileGroup = new h2d.TileGroup(tiles, parent);
+        var tileSetArray = tiles.gridFlatten(TILE_SIZE, 0, 0);
+        if( map.layers.length > 0 && layer < map.layers.length ) {
+            var tileX = 0;
+            var tileY = 0;
+            for(tile in map.layers[layer].data.tiles) {
+                // Tiled stores empty tiles as 0 and offsets the tileId by 1 so we must skip empty tiles and adjust the tileId back to the proper index 
+                var tileId = tile.gid;
                 if( tileId > 0 && tileId < tileSetArray.length ) tileGroup.add(tileX, tileY, tileSetArray[tileId - 1]);
-				tileX += size;
-				if( tileX >= map.width * size ) {
-					tileX = 0; 
-					tileY += size;
-				}
-			}
-		}
-	}
+                tileX += size;
+                if( tileX >= map.width * size ) {
+                    tileX = 0; 
+                    tileY += size;
+                }
+            }
+        }
+    }
 
     override function update(dt:Float) {
         for (u in updateables) {

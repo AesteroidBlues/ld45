@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="45" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="100">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="45" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="120">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="45" columns="9">
   <image source="tileset.png" width="144" height="80"/>
   <tile id="0" type="tl"/>
@@ -18,14 +18,14 @@
  </tileset>
  <layer id="1" name="tiles" width="45" height="60">
   <data encoding="base64" compression="zlib">
-   eJztmVEPgjAMhFHf1Dfl//9VZqJJsxRZd9hadpfcExz9AiSXbdPUr1PxucMXYCaqa/Gtw/cI2LfI7CMy+4jMPsrI/Ch+KpZ82vUZnIt02VpWMluzLXOR7ztSFvFozFHO+K5GY2bWltW6TN6j9diny/bOtviV1fpIzrX2YGsWUdT3JfNxmRGT+djMGf/nSGakj+qs5NrKRqnuQcncu5b89Z5qxv+KzGQmM2Yy52D+1qFyDrIerJ+zth5E90W3OtHSg/VzuC/K7L9lEY/GHOWM7yor857rQcv5IDIXEXI+GKWMZ8dk9hGZfURmH2VkjuqyBe9dTVk=
+   eJztmckOwjAMRMt2ocAF+P9fJZWoZEUuWab1UjzSXArGT4rJKOkw9OuQfOzwCeiJ6po8dvimAftVMMsomGUUzDLyyPxMfjGmfNznb7AvkmVLtZS5tbamL7K+/1TL+Zx8qXhmifme/Kh4tnZfCWsxW1pfpK/1eeZqJeZZs5bLMvodLsfmLFu7tsZTLZdHtG9rDtbWItJa32BuZ572pHne8r3JEjP1tCfNs5rvTVaZvcyGR2bv/0FpZiSP8lrKVarVUp6DlLn3LLn1narHuQpmXeZSlltkLmW5ReYtHcw+mH9lKO2DnAfz31k6D6L3oqVMbMnB/Hf2ci8a9zn210jCe2GunWctI/Mc69tWu+Z5sOX9INIXEfJ+UEse3x0Hs4yCWUbBLCOPzFpZ9gEqs00J
   </data>
  </layer>
- <objectgroup id="2" name="spawn">
+ <objectgroup id="2" name="spawn" visible="0">
   <object id="1" name="player_spawn" x="364.333" y="911.333">
    <point/>
   </object>
-  <object id="2" name="enemy_spawn" x="283" y="692.5">
+  <object id="2" name="enemy_spawn" x="360.333" y="59.1667">
    <point/>
   </object>
   <object id="35" x="360.333" y="776.333">
@@ -107,7 +107,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="transition">
+ <objectgroup id="4" name="transition" visible="0">
   <object id="33" name="1,4" x="334.667" y="800.333" width="50.6667" height="7.18182">
    <properties>
     <property name="target" type="int" value="35"/>
@@ -198,12 +198,12 @@
     <property name="target" type="int" value="73"/>
    </properties>
   </object>
-  <object id="53" name="1,2" x="239.318" y="225.466" width="8" height="47.5">
+  <object id="53" name="0,1" x="239.318" y="225.466" width="8" height="47.5">
    <properties>
     <property name="target" type="int" value="79"/>
    </properties>
   </object>
-  <object id="54" name="2,2" x="230.682" y="225.034" width="8" height="47.5">
+  <object id="54" name="1,1" x="230.682" y="225.034" width="8" height="47.5">
    <properties>
     <property name="target" type="int" value="78"/>
    </properties>
@@ -266,8 +266,18 @@
   <object id="30" x="232.25" y="-0.2915" width="15.5" height="224.083"/>
   <object id="31" x="232.208" y="-7.875" width="247.083" height="15.75"/>
   <object id="32" x="471.75" y="-7.0415" width="15.5" height="199.583"/>
+  <object id="104" x="344" y="551.5" width="48.5" height="16"/>
+  <object id="105" x="551.727" y="199.545" width="16.5" height="17"/>
+  <object id="106" x="551.386" y="263.5" width="16.5" height="17"/>
+  <object id="107" x="631.568" y="263.5" width="16.5" height="17"/>
+  <object id="108" x="632.114" y="199.682" width="16.5" height="17"/>
+  <object id="109" x="71.3937" y="678.856" width="16.5" height="17"/>
+  <object id="110" x="71.0527" y="742.811" width="16.5" height="17"/>
+  <object id="111" x="151.235" y="742.811" width="16.5" height="17"/>
+  <object id="112" x="151.781" y="678.993" width="16.5" height="17"/>
+  <object id="113" x="280.083" y="375.667" width="48.5" height="16"/>
  </objectgroup>
- <objectgroup id="5" name="rooms">
+ <objectgroup id="5" name="rooms" visible="0">
   <object id="88" x="355.333" y="726.667">
    <point/>
   </object>
@@ -280,7 +290,7 @@
   <object id="91" x="612" y="554.667">
    <point/>
   </object>
-  <object id="92" x="353.333" y="559.333">
+  <object id="92" x="284.833" y="558.833">
    <point/>
   </object>
   <object id="93" x="349.333" y="404">
@@ -299,8 +309,26 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="6" name="pickups">
-  <object id="98" type="sword" gid="32" x="400.5" y="720" width="16" height="16"/>
-  <object id="99" type="crossbow" gid="33" x="406.5" y="769" width="16" height="16"/>
+ <objectgroup id="6" name="pickups" visible="0">
+  <object id="98" type="sword" gid="32" x="342.167" y="410.5" width="16" height="16"/>
+  <object id="99" type="crossbow" gid="33" x="105.5" y="736.333" width="16" height="16"/>
+  <object id="100" type="sword" gid="32" x="547" y="756.667" width="16" height="16"/>
+  <object id="101" type="crossbow" gid="33" x="592.333" y="255.083" width="16" height="16"/>
+  <object id="102" type="sword" gid="32" x="114" y="257.333" width="16" height="16"/>
+  <object id="103" type="sword" gid="32" x="579.03" y="578.545" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="text">
+  <object id="115" x="253.227" y="817.578" width="65.0469" height="12.3438">
+   <text pixelsize="10" wrap="1">wasd - move</text>
+  </object>
+  <object id="116" x="251.477" y="832.828" width="71.0469" height="12.3438">
+   <text pixelsize="10" wrap="1">space - attack</text>
+  </object>
+  <object id="118" x="389.977" y="819.328" width="72.0469" height="12.3438">
+   <text pixelsize="10" wrap="1">find a weapon</text>
+  </object>
+  <object id="119" x="300.977" y="933.828" width="120.047" height="12.3438">
+   <text pixelsize="10" wrap="1">kill your opponent first</text>
+  </object>
  </objectgroup>
 </map>

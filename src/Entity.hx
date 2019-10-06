@@ -9,6 +9,8 @@ class Entity extends Drawable {
     public var hasArmor : Bool;
 
     public var game : Main;
+    public var dead : Bool = false;
+    public var deathTimer : Float = 0;
 
     var onDeath : () -> Void;
 
@@ -40,7 +42,5 @@ class Entity extends Drawable {
         game.updateables.remove(this);
     }
 
-    public function update(dt : Float) {
-
-    }
+    public function update(dt : Float) { }
 }

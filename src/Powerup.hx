@@ -9,7 +9,7 @@ enum PowerupType {
 }
 
 class Powerup extends Drawable {
-    var type : PowerupType;
+    public var type : PowerupType;
     var game : Main;
 
     public function new (parent : Object, type : String, game : Main) {
@@ -29,6 +29,10 @@ class Powerup extends Drawable {
                 var sprite = hxd.Res.crossbow_closeup_png.toTile();
                 new Bitmap(sprite, this);
         }
+    }
+
+    public function isWeapon() : Bool {
+        return this.type == Crossbow || this.type == Sword;
     }
 
     public function onPickup(ent : Entity) {

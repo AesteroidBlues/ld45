@@ -1,3 +1,4 @@
+import hxd.res.Sound;
 import h2d.Bitmap;
 import h2d.Tile;
 import h2d.Drawable;
@@ -7,9 +8,13 @@ import h2d.Anim;
 
 class Crossbow extends Weapon {
     var anim : Anim;
+    var shootSound : Sound;
 
     public function new(parent : Object) {
         super(parent);
+
+        this.type = Crossbow;
+        shootSound = hxd.Res.sfx_crossbow;
 
         var spriteSheet = hxd.Res.bow_png.toTile();
         var sprites = spriteSheet.gridFlatten(16);
@@ -24,16 +29,19 @@ class Crossbow extends Weapon {
 
     override function attack(owner:Entity, target:Entity) {
         anim.pause = false;
+        this.canAttack = false;
 
         var arrow = new Arrow(owner.game.camera, owner.game, owner);
         arrow.x = owner.x;
         arrow.y = owner.y;
         arrow.rotation = owner.rotation;
+        this.shootSound.play();
     }
 
     function onShotEnd() {
         this.anim.currentFrame = 0;
         this.anim.pause = true;
+        this.canAttack = true;
     }
 }
 

@@ -18,7 +18,7 @@ class Enemy extends Entity {
     public var speed : Float = 48.0;
 
     var state : AiState;
-    var target : Point;
+    var target : Drawable;
     var path : Array<Point>;
 
     var walkableSpaces : Array<Array<Bool>>;
@@ -58,26 +58,55 @@ class Enemy extends Entity {
         var bitmap = new Bitmap(sprite, this);
 
         this.onDeath = function () {
-            remove();
+            this.game.init();
         }
     }
 
     public override function update(dt : Float) {
         // If we're not currently doing anything, pathfind to a random room
         if (state == Idle) {
-            this.target = rooms[Std.random(rooms.length)];
+            var point = rooms[Std.random(rooms.length)];
 
             state = Wander;
             var tileX = Math.floor(this.x / Main.TILE_SIZE);
             var tileY = Math.floor(this.y / Main.TILE_SIZE);
-            var targetX = Math.floor(this.target.x / Main.TILE_SIZE);
-            var targetY = Math.floor(this.target.y / Main.TILE_SIZE);
+            var targetX = Math.floor(point.x / Main.TILE_SIZE);
+            var targetY = Math.floor(point.y / Main.TILE_SIZE);
 
-            trace('Seeking ${targetX}, ${targetY}');
             this.path = getPath(new Point(tileX, tileY), new Point(targetX, targetY));
         }
 
-        if (state == Wander) {
+        if (state == Attack) {
+            if (weapon.type == Sword) {
+                var distToPlayer = new Point(game.player.x - this.x, game.player.y - this.y);
+                if (distToPlayer.length() < 10 && distToPlayer.length() > 3 && weapon.canAttack) {
+                    weapon.attack(this, game.player);
+                }
+                else if (distToPlayer.length() > 10 && path.length == 0) {
+                    seekPlayer();
+                }
+            }
+            else {
+                var dirToPlayer = new Point(game.player.x - this.x, game.player.y - this.y);
+                LookAt(dirToPlayer.x, dirToPlayer.y);
+                if (weapon.canAttack) {
+                    weapon.attack(this, game.player);
+                }
+            }
+        }
+
+        if (this.target != null) {
+            var distToTarget = new Point(target.x - this.x, target.y - this.y);
+            if (distToTarget.length() < 25) {
+                path = [];
+                distToTarget.normalize();
+                LookAt(distToTarget.x, distToTarget.y);
+                this.x += distToTarget.x * dt * this.speed;
+                this.y += distToTarget.y * dt * this.speed;
+            }
+        }
+
+        if (path.length > 0) {
             var faceX = (path[0].x * Main.TILE_SIZE) - this.x;
             var faceY = (path[0].y * Main.TILE_SIZE) - this.y;
 
@@ -95,10 +124,60 @@ class Enemy extends Entity {
             this.y += vec.y * dt * this.speed;
         }
 
-        // If we're on our way to a room and enough time has passed,
-        // check if the player or a powerup is near us
-            // If we're near the player and have a weapon, attack it
-            // If we're near a powerup and we want it, go get it
+        if (weapon != null && this.state != Attack) {
+            seekPlayer();
+            this.state = Attack;
+        }
+        else if (this.state != SeekItem) {
+            // Look for pick ups
+            for (p in game.pickups) {
+                if (p.isWeapon() && weapon != null) {
+                    continue;
+                }
+
+                var dX = p.x - this.x;
+                var dY = p.y - this.y;
+                var pt : Point = new Point(dX, dY);
+                if (pt.length() < 100) {
+                    var tp = getTilePosFromWorld(this.x, this.y);
+                    var pickupPos = getTilePosFromWorld(p.x, p.y);
+                    this.path = getPath(tp, pickupPos);
+                    this.state = SeekItem;
+                    this.target = p;
+                    trace ('Seeking ${p.type}');
+                    break;
+                }
+            }
+        }
+
+        var spriteBounds = new h2d.col.Bounds();
+        spriteBounds.x = this.x - 8;
+        spriteBounds.y = this.y - 8;
+        spriteBounds.width = sprite.width;
+        spriteBounds.height = sprite.height;
+
+        for (p in this.game.pickups) {
+            if (spriteBounds.intersects(p.getBounds(this.game.camera))) {
+                if (weapon == null) {
+                    game.switchMusic(game.enemyWeaponMusic);
+                }
+                
+                p.onPickup(this);
+            }
+        }
+    }
+
+    private function seekPlayer() {
+        // Seek the player
+        this.target = game.player;
+        var tilePos = getTilePosFromWorld(this.x, this.y);
+        var playerPos = getTilePosFromWorld(game.player.x, game.player.y);
+        this.path = getPath(tilePos, playerPos);
+        trace ("Attacking player!");
+    }
+
+    private function getTilePosFromWorld(x : Float, y : Float) : Point {
+        return new Point(Math.floor(x / Main.TILE_SIZE), Math.floor(y / Main.TILE_SIZE));
     }
 
     public function getPath(start : Point, dest : Point) : Array<Point> {
@@ -115,7 +194,6 @@ class Enemy extends Entity {
         var path = new Array<Point>();
 
         openList.push(start);
-        cameFrom[cast start.y][cast start.x] = null;
         while (openList.length > 0) {
             // Grab the lowest f(x) to process next
             var currY = 0;
@@ -135,6 +213,7 @@ class Enemy extends Entity {
             if (currX == dest.x && currY == dest.y) {
                 var cameX : Int = cast dest.x;
                 var cameY : Int = cast dest.y;
+                path.push(dest);
                 while (cameFrom[cameY][cameX] != null) {
                     path.push(cameFrom[cameY][cameX]);
                     var newX : Int = cast cameFrom[cameY][cameX].x;
@@ -188,6 +267,6 @@ class Enemy extends Entity {
     private function heuristic(x : Float, y : Float, dest : Point) : Int {
         var d1 = Math.abs(x - dest.x);
         var d2 = Math.abs(y - dest.y);
-        return cast d1+d2;
+        return Math.floor(Math.sqrt(d1 * d1 + d2 * d2));
     }
 }
