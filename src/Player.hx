@@ -21,17 +21,22 @@ class Player extends Entity {
         super(parent, main);
 
         sprite = hxd.Res.player.toTile();
+        sprite.setCenterRatio();
         var bitmap = new Bitmap(sprite, this);
-        bitmap.tile.dx -= 8;
-        bitmap.tile.dy -= 8;
+        
 
         this.graphics = new Graphics(this.game.camera);
-        this.onDeath = function() {
-            game.init();
-        }
     }
 
     public override function update(dt : Float) {
+        if (this.dead) {
+            this.deathTimer -= dt;
+            if (deathTimer <= 0) {
+                game.init();
+            }
+            return;
+        }
+
         var p = new Point();
         if (Key.isDown(Key.W)) {
             p.y -= this.speed * dt;

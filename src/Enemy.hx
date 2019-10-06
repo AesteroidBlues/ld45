@@ -53,16 +53,20 @@ class Enemy extends Entity {
 
         this.path = new Array<Point>();
 
-        sprite = h2d.Tile.fromColor(0xCC0044, 16, 16);
+        sprite = hxd.Res.enemy.toTile();
         sprite.setCenterRatio();
         var bitmap = new Bitmap(sprite, this);
-
-        this.onDeath = function () {
-            this.game.init();
-        }
     }
 
     public override function update(dt : Float) {
+        if (this.dead) {
+            this.deathTimer -= dt;
+            if (deathTimer <= 0) {
+                game.init();
+            }
+            return;
+        }
+
         // If we're not currently doing anything, pathfind to a random room
         if (state == Idle) {
             var point = rooms[Std.random(rooms.length)];
@@ -89,7 +93,7 @@ class Enemy extends Entity {
             else {
                 var dirToPlayer = new Point(game.player.x - this.x, game.player.y - this.y);
                 LookAt(dirToPlayer.x, dirToPlayer.y);
-                if (weapon.canAttack) {
+                if (weapon.canAttack && dirToPlayer.length() < 150) {
                     weapon.attack(this, game.player);
                 }
             }
@@ -161,7 +165,7 @@ class Enemy extends Entity {
                 if (weapon == null) {
                     game.switchMusic(game.enemyWeaponMusic);
                 }
-                
+
                 p.onPickup(this);
             }
         }

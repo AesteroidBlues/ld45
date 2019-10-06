@@ -10,7 +10,7 @@ class Entity extends Drawable {
 
     public var game : Main;
     public var dead : Bool = false;
-    public var deathTimer : Float = 0;
+    public var deathTimer : Float = 0.5;
 
     var onDeath : () -> Void;
 
@@ -34,7 +34,11 @@ class Entity extends Drawable {
     public function takeDamage(damage : Float) {
         this.health -= damage;
         if (this.health <= 0) {
-            onDeath();
+            this.dead = true;
+            if (onDeath != null) {
+                onDeath();
+            }
+            this.visible = false;
         }
     }
 

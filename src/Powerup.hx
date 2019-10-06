@@ -46,6 +46,7 @@ class Powerup extends Drawable {
                 ent.weapon = crossbow;
             }
 
+            game.pickups.remove(this);
             remove();
         }
     }
