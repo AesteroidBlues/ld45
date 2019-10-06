@@ -10,3 +10,6 @@ Asset tools:
 * [Tiled](https://www.mapeditor.org/)
 * [Ableton Live Lite](https://www.ableton.com/en/products/live-lite/)
 * [BFXR](https://www.bfxr.net/)
+
+[LD Page](https://ldjam.com/events/ludum-dare/45/pit-fight)
+[Play on itch.io](https://alexferbrache.itch.io/ludum-dare-45)
