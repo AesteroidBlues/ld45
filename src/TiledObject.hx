@@ -1,6 +1,7 @@
 class TiledObject {
     public var id : Int;
     public var name : String;
+    public var type : String;
     public var x : Int;
     public var y : Int;
     public var width : Int;
@@ -18,6 +19,8 @@ class TiledObject {
                     this.id = Std.parseInt(val); 
                 case "name":
                     this.name = val;
+                case "type":
+                    this.type = val;
                 case "x":
                     this.x = Std.parseInt(val); 
                 case "y":

@@ -12,14 +12,10 @@ enum AiState {
     Attack;
 }
 
-class Enemy extends Drawable {
-    public var MAX_HEALTH = 30;
-
-    public var health : Float;
+class Enemy extends Entity {
     public var sprite : Tile;
 
     public var speed : Float = 48.0;
-    var game : Main;
 
     var state : AiState;
     var target : Point;
@@ -29,13 +25,9 @@ class Enemy extends Drawable {
     var rooms : Array<Point>;
 
     public function new(parent : Object, main : Main) {
-        super(parent);
-
-        this.health = MAX_HEALTH;
+        super(parent, main);
 
         this.state = Idle;
-
-        this.game = main;
 
         var mapWidth = this.game.map.width;
         var mapHeight = this.game.map.height;
@@ -64,12 +56,9 @@ class Enemy extends Drawable {
         sprite = h2d.Tile.fromColor(0xCC0044, 16, 16);
         sprite.setCenterRatio();
         var bitmap = new Bitmap(sprite, this);
-    }
 
-    public function takeDamage(damage : Int) {
-        this.health -= damage;
-        if (this.health <= 0) {
-            this.remove();
+        this.onDeath = function () {
+            remove();
         }
     }
 
@@ -200,9 +189,5 @@ class Enemy extends Drawable {
         var d1 = Math.abs(x - dest.x);
         var d2 = Math.abs(y - dest.y);
         return cast d1+d2;
-    }
-
-    public function LookAt(x : Float, y : Float) {
-        this.rotation = (Math.PI/2) + Math.atan2(y, x);
     }
 }

@@ -17,11 +17,14 @@ class Main extends App {
 
     public inline static var TILE_SIZE = 16;
 
+    public var pickups : Array<Powerup>;
+
     override function init() {
         s2d.scaleMode = Stretch(sceneWidth, sceneHeight);
 
         engine.backgroundColor = 0x333333;
 
+        pickups = new Array<Powerup>();
         this.map = new TiledMap(Res.arena.entry.getBytes().toString());
         var tiles = hxd.Res.tileset.toTile();
         
@@ -49,6 +52,14 @@ class Main extends App {
 
         moveCamera(Math.floor(player.x / (ROOM_WIDTH * TILE_SIZE)), 
         Math.floor(player.y / (ROOM_HEIGHT * TILE_SIZE)));
+
+        for (o in map.objects["pickups"].objects) {
+            var pickup = new Powerup(camera, o.type, this);
+            pickup.x = o.x;
+            pickup.y = o.y;
+
+            pickups.push(pickup);
+        }
     }
 
     public function moveCamera(roomX : Int, roomY : Int) {

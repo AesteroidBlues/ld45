@@ -3,9 +3,8 @@ import h2d.col.Point;
 import h2d.Graphics;
 import h2d.col.Circle;
 import h2d.Object;
-import h2d.Drawable;
 
-class Sword extends Drawable {
+class Sword extends Weapon {
     var game : Main;
     var graphics : Graphics;
 
@@ -30,7 +29,7 @@ class Sword extends Drawable {
         addChild(anim);
     }
 
-    public function attack(owner : Player, target : Enemy) {
+    public override function attack(owner : Entity, target : Entity) {
         this.anim.pause = false;
 
         var forward = new Point(Math.sin(owner.rotation), -Math.cos(owner.rotation));

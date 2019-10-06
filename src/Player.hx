@@ -7,26 +7,18 @@ import h2d.Object;
 import hxd.Key;
 import h2d.Graphics;
 
-class Player extends Drawable {
-    public var health : Float;
+class Player extends Entity {
     public var sprite : Tile;
 
     public var speed : Float = 48.0  * 2;
-    var game : Main;
 
     private var mouseX : Float;
     private var mouseY : Float;
 
-    public var sword : Sword;
-
     var graphics : Graphics;
 
     public function new(parent : Object, main : Main) {
-        super(parent);
-
-        this.game = main;
-
-        this.sword = new Sword(this, main);
+        super(parent, main);
 
         sprite = hxd.Res.player.toTile();
         var bitmap = new Bitmap(sprite, this);
@@ -102,12 +94,14 @@ class Player extends Drawable {
             }
         }
 
-        if (Key.isPressed(Key.SPACE)) {
-            this.sword.attack(this, game.enemy);
+        for (p in this.game.pickups) {
+            if (spriteBounds.intersects(p.getBounds(this.game.camera))) {
+                p.onPickup(this);
+            }
         }
-    }
 
-    public function LookAt(x : Float, y : Float) {
-        this.rotation = (Math.PI/2) + Math.atan2(y, x);
+        if (Key.isPressed(Key.SPACE) && weapon != null) {
+            this.weapon.attack(this, game.enemy);
+        }
     }
 }
