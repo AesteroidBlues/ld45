@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="20">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="45" columns="9">
+  <image source="tileset.png" width="144" height="80"/>
+ </tileset>
+ <layer id="1" name="Tiles" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMKCuZEwNnlmIOZCU0cs5kHSywLErATUI6tB1ssLxHwE9CKr4SFghwget+DTywsNE1xuGUj/UhJHwtAwIRWLAjEAhWoGaA==
+  </data>
+ </layer>
+ <objectgroup id="2" name="collision">
+  <object id="1" x="104.028" y="72.0551" width="32.1024" height="15.5748"/>
+  <object id="2" x="183.991" y="40.3721" width="15.7804" height="15.5748"/>
+  <object id="3" x="183.926" y="104.106" width="15.7804" height="15.5748"/>
+  <object id="4" x="40.0639" y="104.106" width="15.7804" height="15.5748"/>
+  <object id="5" x="39.8802" y="40.1667" width="15.7804" height="15.5748"/>
+  <object id="6" x="7.7534" y="-0.305679" width="88.5571" height="7.753"/>
+  <object id="7" x="143.274" y="0.204439" width="89.2375" height="7.753"/>
+  <object id="8" x="7.92334" y="151.879" width="224.249" height="7.753"/>
+  <object id="9" x="-0.238533" y="95.4263" width="8.29886" height="63.8659"/>
+  <object id="10" x="-0.0684914" y="-0.305676" width="8.29886" height="63.8659"/>
+  <object id="11" x="231.185" y="0.374481" width="7.95878" height="158.748"/>
+ </objectgroup>
+ <objectgroup id="3" name="transition">
+  <object id="13" x="96.5822" y="-3.0607" width="46.5907" height="13.6031"/>
+  <object id="14" x="-2.89068" y="63.9347" width="11.5627" height="31.6273"/>
+ </objectgroup>
+ <objectgroup id="4" name="spawn">
+  <object id="16" name="player_spawn" x="120.048" y="137.052">
+   <point/>
+  </object>
+  <object id="17" name="enemy_spawn" x="72.4367" y="41.4895">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

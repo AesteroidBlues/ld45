@@ -1,0 +1,20 @@
+# -cp src
+# -hl bin/hl/main.hl
+
+# -D windowSize=480x320
+
+# -lib heaps
+# -lib hlsdl
+
+# -main Main
+
+# --next
+
+-cp src
+-js bin/web/main.js
+
+-debug
+
+-lib heaps
+
+-main Main
