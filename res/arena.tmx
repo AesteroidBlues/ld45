@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="45" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="120">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="45" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="120">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="45" columns="9">
   <image source="tileset.png" width="144" height="80"/>
   <tile id="0" type="tl"/>
@@ -12,16 +12,19 @@
   <tile id="11" type="mr"/>
   <tile id="12" type="ibl"/>
   <tile id="13" type="ibr"/>
+  <tile id="14" type="ground"/>
+  <tile id="15" type="ground"/>
+  <tile id="16" type="ground"/>
   <tile id="18" type="bl"/>
   <tile id="19" type="bm"/>
   <tile id="20" type="br"/>
  </tileset>
  <layer id="1" name="tiles" width="45" height="60">
   <data encoding="base64" compression="zlib">
-   eJztmckOwjAMRMt2ocAF+P9fJZWoZEUuWab1UjzSXArGT4rJKOkw9OuQfOzwCeiJ6po8dvimAftVMMsomGUUzDLyyPxMfjGmfNznb7AvkmVLtZS5tbamL7K+/1TL+Zx8qXhmifme/Kh4tnZfCWsxW1pfpK/1eeZqJeZZs5bLMvodLsfmLFu7tsZTLZdHtG9rDtbWItJa32BuZ572pHne8r3JEjP1tCfNs5rvTVaZvcyGR2bv/0FpZiSP8lrKVarVUp6DlLn3LLn1narHuQpmXeZSlltkLmW5ReYtHcw+mH9lKO2DnAfz31k6D6L3oqVMbMnB/Hf2ci8a9zn210jCe2GunWctI/Mc69tWu+Z5sOX9INIXEfJ+UEse3x0Hs4yCWUbBLCOPzFpZ9gEqs00J
+   eJztmdsKwyAMht3pZqd2bHv/V52FCRJsG43m0Br4b7qm+dDMH9W58jh4HQt0ItSkxtXrVqC7BOw/OjNP7IF5cPaYLY5zZy6Lt9cnoZgv9fuXWJfiZXO5MXNuLqYuZX73lJvS2euCeKaJ+eH1RDyrXbeVRibmV6M5khrnVF3t/ZzK5ehnydyUl8XvpHwseFntXIym3JQfxXVzfRCbSwmp+bXAPDhdzNOaFPoNrk0S47zkDUHTmhR6Fa5NmnqDIk7mMeNdLcyU/+DemSl+BHNjrrVcqYA+GDOX7iVbn6la7Ks9MIe1UiPzmpdjmOf8txUz9PLB5TNr6Y0a6sw2mJc8NK5D2Q/C78ztB6nnomuemOOD8DtbORelnOfANY2LeevnOVrO+mrlYva+tepi+1lKlH7mml+4b7bakzX3gzn3g5S6lKDcD0qFxbvjzswTnZknOjNPWGSW8rIfOkJNRQ==
   </data>
  </layer>
- <objectgroup id="2" name="spawn" visible="0">
+ <objectgroup id="2" name="spawn">
   <object id="1" name="player_spawn" x="364.333" y="911.333">
    <point/>
   </object>
@@ -107,7 +110,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="transition" visible="0">
+ <objectgroup id="4" name="transition">
   <object id="33" name="1,4" x="334.667" y="800.333" width="50.6667" height="7.18182">
    <properties>
     <property name="target" type="int" value="35"/>
@@ -277,7 +280,7 @@
   <object id="112" x="151.781" y="678.993" width="16.5" height="17"/>
   <object id="113" x="280.083" y="375.667" width="48.5" height="16"/>
  </objectgroup>
- <objectgroup id="5" name="rooms" visible="0">
+ <objectgroup id="5" name="rooms">
   <object id="88" x="355.333" y="726.667">
    <point/>
   </object>
@@ -309,7 +312,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="6" name="pickups" visible="0">
+ <objectgroup id="6" name="pickups">
   <object id="98" type="sword" gid="32" x="342.167" y="410.5" width="16" height="16"/>
   <object id="99" type="crossbow" gid="33" x="105.5" y="736.333" width="16" height="16"/>
   <object id="100" type="sword" gid="32" x="547" y="756.667" width="16" height="16"/>

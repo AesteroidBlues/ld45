@@ -2,7 +2,7 @@ import h2d.Object;
 import h2d.Drawable;
 
 class Entity extends Drawable {
-    public var MAX_HEALTH = 30;
+    public var MAX_HEALTH = 50;
     public var health : Float;
 
     public var weapon : Weapon;

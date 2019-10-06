@@ -47,7 +47,7 @@ class Crossbow extends Weapon {
 
 class Arrow extends Entity {
     public var speed : Int = 200;
-    public var damage : Float = 7;
+    public var damage : Float = 5;
 
     var sprite : Tile;
     var owner : Entity;
