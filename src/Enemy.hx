@@ -62,7 +62,7 @@ class Enemy extends Entity {
         }
     }
 
-    public function update(dt : Float) {
+    public override function update(dt : Float) {
         // If we're not currently doing anything, pathfind to a random room
         if (state == Idle) {
             this.target = rooms[Std.random(rooms.length)];

@@ -19,12 +19,16 @@ class Main extends App {
 
     public var pickups : Array<Powerup>;
 
+    public var updateables : Array<Entity>;
+
     override function init() {
         s2d.scaleMode = Stretch(sceneWidth, sceneHeight);
 
         engine.backgroundColor = 0x333333;
 
         pickups = new Array<Powerup>();
+        updateables = new Array<Entity>();
+
         this.map = new TiledMap(Res.arena.entry.getBytes().toString());
         var tiles = hxd.Res.tileset.toTile();
         
@@ -87,8 +91,9 @@ class Main extends App {
 	}
 
     override function update(dt:Float) {
-        this.player.update(dt);
-        this.enemy.update(dt);
+        for (u in updateables) {
+            u.update(dt);
+        }
     }
 
     static function main() {

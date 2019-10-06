@@ -26,6 +26,8 @@ class Powerup extends Drawable {
                 this.type = Armor;
             case "crossbow":
                 this.type = Crossbow;
+                var sprite = hxd.Res.crossbow_closeup_png.toTile();
+                new Bitmap(sprite, this);
         }
     }
 
@@ -36,7 +38,8 @@ class Powerup extends Drawable {
                 ent.weapon = sword;
             }
             else if (type == Crossbow) {
-
+                var crossbow = new Crossbow(ent);
+                ent.weapon = crossbow;
             }
 
             remove();

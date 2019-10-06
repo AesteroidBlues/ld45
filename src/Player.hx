@@ -28,7 +28,7 @@ class Player extends Entity {
         this.graphics = new Graphics(this.game.camera);
     }
 
-    public function update(dt : Float) {
+    public override function update(dt : Float) {
         var p = new Point();
         if (Key.isDown(Key.W)) {
             p.y -= this.speed * dt;

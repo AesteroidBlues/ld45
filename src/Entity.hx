@@ -8,7 +8,7 @@ class Entity extends Drawable {
     public var weapon : Weapon;
     public var hasArmor : Bool;
 
-    var game : Main;
+    public var game : Main;
 
     var onDeath : () -> Void;
 
@@ -21,16 +21,26 @@ class Entity extends Drawable {
 
         weapon = null;
         hasArmor = false;
+
+        game.updateables.push(this);
     }
 
     function LookAt(x : Float, y : Float) {
         this.rotation = (Math.PI/2) + Math.atan2(y, x);
     }
 
-    public function takeDamage(damage : Int) {
+    public function takeDamage(damage : Float) {
         this.health -= damage;
         if (this.health <= 0) {
             onDeath();
         }
+    }
+
+    public override function onRemove() {
+        game.updateables.remove(this);
+    }
+
+    public function update(dt : Float) {
+
     }
 }
