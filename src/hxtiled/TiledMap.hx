@@ -1,3 +1,5 @@
+package hxtiled;
+
 import Xml;
 
 import Enums;

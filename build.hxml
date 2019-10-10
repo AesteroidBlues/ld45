@@ -16,5 +16,6 @@
 
 
 -lib heaps
+-lib hxmath
 
 -main Main

@@ -17,7 +17,7 @@ class Player extends Entity {
 
     var graphics : Graphics;
 
-    public function new(parent : Object, main : Main) {
+    public function new(parent : Object, main : MyGameState) {
         super(parent, main);
 
         sprite = hxd.Res.player.toTile();
@@ -32,7 +32,7 @@ class Player extends Entity {
         if (this.dead) {
             this.deathTimer -= dt;
             if (deathTimer <= 0) {
-                game.init();
+                //game.init();
             }
             return;
         }
@@ -51,7 +51,7 @@ class Player extends Entity {
             p.x += this.speed * dt;
         }
 
-        var mouseWorldSpace = this.game.camera.screenToWorldSpace(this.game.s2d.mouseX, this.game.s2d.mouseY);
+        var mouseWorldSpace = this.game.camera.screenToWorldSpace(this.game.mouseX, this.game.mouseY);
         var lookTargetX = mouseWorldSpace.x - this.x;
         var lookTargetY = mouseWorldSpace.y - this.y;
 

@@ -1,3 +1,5 @@
+package hxtiled;
+
 class TiledObjectGroup {
     public var id : Int;
     public var name : String;

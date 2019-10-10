@@ -1,3 +1,5 @@
+package hxtiled;
+
 class TiledTile {
     public var gid(get, null) : Int;
     public var id(get, null) : Int;

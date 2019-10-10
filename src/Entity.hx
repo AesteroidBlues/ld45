@@ -1,3 +1,4 @@
+import hxmath.math.Vector2;
 import h2d.Object;
 import h2d.Drawable;
 
@@ -8,23 +9,26 @@ class Entity extends Drawable {
     public var weapon : Weapon;
     public var hasArmor : Bool;
 
-    public var game : Main;
+    public var game : MyGameState;
     public var dead : Bool = false;
     public var deathTimer : Float = 0.5;
 
+    public var position : Vector2;
+
     var onDeath : () -> Void;
 
-    public function new(parent : Object, game : Main) {
+    public function new(parent : Object, game : MyGameState) {
         super(parent);
 
         this.game = game;
+        position = new Vector2(0, 0);
 
         this.health = MAX_HEALTH;
 
         weapon = null;
         hasArmor = false;
 
-        game.updateables.push(this);
+        game.updatables.push(this);
     }
 
     function LookAt(x : Float, y : Float) {
@@ -38,12 +42,13 @@ class Entity extends Drawable {
             if (onDeath != null) {
                 onDeath();
             }
+            
             this.visible = false;
         }
     }
 
     public override function onRemove() {
-        game.updateables.remove(this);
+        game.updatables.remove(this);
     }
 
     public function update(dt : Float) { }

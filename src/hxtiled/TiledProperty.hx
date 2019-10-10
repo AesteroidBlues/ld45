@@ -1,3 +1,5 @@
+package hxtiled;
+
 class TiledProperty {
     public var name(get, null) : String;
     public var type(get, null) : String;

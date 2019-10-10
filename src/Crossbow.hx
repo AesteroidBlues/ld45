@@ -16,7 +16,7 @@ class Crossbow extends Weapon {
         this.type = Crossbow;
         shootSound = hxd.Res.sfx_crossbow;
 
-        var spriteSheet = hxd.Res.bow_png.toTile();
+        var spriteSheet = hxd.Res.bow.toTile();
         var sprites = spriteSheet.gridFlatten(16);
         this.anim = new Anim(sprites);
         this.anim.pause = true;
@@ -52,7 +52,7 @@ class Arrow extends Entity {
     var sprite : Tile;
     var owner : Entity;
 
-    public function new(parent : Object, game : Main, owner : Entity) {
+    public function new(parent : Object, game : MyGameState, owner : Entity) {
         super(parent, game);
         this.game = game;
         this.owner = owner;

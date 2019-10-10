@@ -24,7 +24,7 @@ class Enemy extends Entity {
     var walkableSpaces : Array<Array<Bool>>;
     var rooms : Array<Point>;
 
-    public function new(parent : Object, main : Main) {
+    public function new(parent : Object, main : MyGameState) {
         super(parent, main);
 
         this.state = Idle;
@@ -62,7 +62,7 @@ class Enemy extends Entity {
         if (this.dead) {
             this.deathTimer -= dt;
             if (deathTimer <= 0) {
-                game.init();
+                // game.init();
             }
             return;
         }
@@ -72,10 +72,10 @@ class Enemy extends Entity {
             var point = rooms[Std.random(rooms.length)];
 
             state = Wander;
-            var tileX = Math.floor(this.x / Main.TILE_SIZE);
-            var tileY = Math.floor(this.y / Main.TILE_SIZE);
-            var targetX = Math.floor(point.x / Main.TILE_SIZE);
-            var targetY = Math.floor(point.y / Main.TILE_SIZE);
+            var tileX = Math.floor(this.x / MyGameState.TILE_SIZE);
+            var tileY = Math.floor(this.y / MyGameState.TILE_SIZE);
+            var targetX = Math.floor(point.x / MyGameState.TILE_SIZE);
+            var targetY = Math.floor(point.y / MyGameState.TILE_SIZE);
 
             this.path = getPath(new Point(tileX, tileY), new Point(targetX, targetY));
         }
@@ -111,8 +111,8 @@ class Enemy extends Entity {
         }
 
         if (path.length > 0) {
-            var faceX = (path[0].x * Main.TILE_SIZE) - this.x;
-            var faceY = (path[0].y * Main.TILE_SIZE) - this.y;
+            var faceX = (path[0].x * MyGameState.TILE_SIZE) - this.x;
+            var faceY = (path[0].y * MyGameState.TILE_SIZE) - this.y;
 
             LookAt(faceX, faceY);
             var vec = new Point(faceX, faceY);
@@ -181,7 +181,7 @@ class Enemy extends Entity {
     }
 
     private function getTilePosFromWorld(x : Float, y : Float) : Point {
-        return new Point(Math.floor(x / Main.TILE_SIZE), Math.floor(y / Main.TILE_SIZE));
+        return new Point(Math.floor(x / MyGameState.TILE_SIZE), Math.floor(y / MyGameState.TILE_SIZE));
     }
 
     public function getPath(start : Point, dest : Point) : Array<Point> {

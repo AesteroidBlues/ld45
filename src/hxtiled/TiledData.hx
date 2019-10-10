@@ -1,3 +1,5 @@
+package hxtiled;
+
 import haxe.crypto.Base64;
 import haxe.zip.InflateImpl;
 

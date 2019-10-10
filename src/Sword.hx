@@ -6,7 +6,7 @@ import h2d.col.Circle;
 import h2d.Object;
 
 class Sword extends Weapon {
-    var game : Main;
+    var game : MyGameState;
     var graphics : Graphics;
 
     var DAMAGE = 10;
@@ -14,7 +14,7 @@ class Sword extends Weapon {
     var anim : Anim;
     var hitSound : Sound;
 
-    public function new(parent : Object, game : Main) {
+    public function new(parent : Object, game : MyGameState) {
         super(parent);
 
         this.game = game;
