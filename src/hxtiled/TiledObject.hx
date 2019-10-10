@@ -1,16 +1,16 @@
 package hxtiled;
 
 class TiledObject {
-    public var id : Int;
-    public var name : String;
-    public var type : String;
-    public var x : Int;
-    public var y : Int;
-    public var width : Int;
-    public var height : Int;
+    public var id(get, null) : Int;
+    public var name(get, null) : String;
+    public var type(get, null) : String;
+    public var x(get, null) : Int;
+    public var y(get, null) : Int;
+    public var width(get, null) : Int;
+    public var height(get, null) : Int;
 
-    public var properties : Map<String, TiledProperty>;
-    public var text : String;
+    public var properties(get, null) : Map<String, TiledProperty>;
+    public var text(get, null) : String;
 
     public function new(xml : Xml) {
         properties = new Map<String, TiledProperty>();
@@ -46,5 +46,41 @@ class TiledObject {
                 this.text = c.firstChild().nodeValue;
             }
         }
+    }
+
+    private function get_id() {
+        return this.id;
+    }
+
+    private function get_name() {
+        return this.name;
+    }
+
+    private function get_type() {
+        return this.type;
+    }
+
+    private function get_x() {
+        return this.x;
+    }
+
+    private function get_y() {
+        return this.y;
+    }
+
+    private function get_width() {
+        return this.width;
+    }
+
+    private function get_height() {
+        return this.height;
+    }
+
+    private function get_properties() {
+        return this.properties;
+    }
+
+    private function get_text() {
+        return this.text;
     }
 }

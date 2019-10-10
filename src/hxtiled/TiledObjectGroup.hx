@@ -1,10 +1,10 @@
 package hxtiled;
 
 class TiledObjectGroup {
-    public var id : Int;
-    public var name : String;
+    public var id(get, null) : Int;
+    public var name(get, null) : String;
 
-    public var objects : Array<TiledObject>;
+    public var objects(get, null) : Array<TiledObject>;
 
     public function new(xml : Xml) {
         objects = new Array<TiledObject>();
@@ -20,5 +20,17 @@ class TiledObjectGroup {
         for (c in xml.elements()) {
             objects.push(new TiledObject(c));
         }
+    }
+
+    private function get_id() {
+        return this.id;
+    }
+
+    private function get_name() {
+        return this.name;
+    }
+
+    private function get_objects() {
+        return this.objects;
     }
 }

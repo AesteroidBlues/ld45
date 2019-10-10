@@ -1,7 +1,9 @@
 package hxtiled;
 
+import format.tools.Inflate;
+import haxe.io.BytesInput;
+import haxe.io.Bytes;
 import haxe.crypto.Base64;
-import haxe.zip.InflateImpl;
 
 class TiledData {
     public var encoding(get, null) : Null<String>;
@@ -28,13 +30,15 @@ class TiledData {
     function setChildren(xml : Xml) {
         switch (encoding) {
             case "csv":
-                tiles = getTilesFromCsv();
+                tiles = getTilesFromCsv(xml);
             case "base64": {
                 switch (compression) {
                     case "gzip":
-                        tiles = getTilesFromBase64GZip();
+                        tiles = getTilesFromBase64GZip(xml.firstChild().nodeValue);
                     case "zlib":
                         tiles = getTilesFromBase64ZLib(xml.firstChild().nodeValue);
+                    default:
+                        tiles = getTilesFromBase64(xml.firstChild().nodeValue);
                 }
             }
             default:
@@ -43,34 +47,75 @@ class TiledData {
     }
 
     function getTilesFromChildren(xml : Xml) : Array<TiledTile> {
-        return null;
+        var parsedTiles = new Array<TiledTile>();
+        for (c in xml.elements()) {
+            var attributes = c.attributes();
+            if (attributes.hasNext()) {
+                parsedTiles.push(new TiledTile(Std.parseInt(c.get("gid"))));
+            }
+            else {
+                // Storing tiles that get ignored by drawTiledLayers kinda sucks
+                // but oh well ¯\_(ツ)_/¯
+                parsedTiles.push(new TiledTile(0));
+            }
+        }
+
+        return parsedTiles;
     }
 
-    function getTilesFromCsv() : Array<TiledTile> {
-        return null;
+    function getTilesFromCsv(xml : Xml) : Array<TiledTile> {
+        var parsedTiles = new Array<TiledTile>();
+        var csvString = xml.firstChild().nodeValue;
+        var splitString = csvString.split(',');
+        for (c in splitString) {
+            parsedTiles.push(new TiledTile(Std.parseInt(c)));
+        }
+
+        return parsedTiles;
     }
 
-    function getTilesFromBase64GZip() : Array<TiledTile> {
+    function getTilesFromBase64(layerData : String) : Array<TiledTile> {
+        var parsedTiles = new Array<TiledTile>();
+        
+        var bytes = decodeBase64String(layerData);
+        var input = new haxe.io.BytesInput(bytes);
+        for( i in 0...bytes.length >> 2 ) {
+            parsedTiles.push(new TiledTile(input.readInt32()));
+        }
+
+        return parsedTiles;
+    }
+
+    function getTilesFromBase64GZip(layerData : String) : Array<TiledTile> {
+        throw("Deserializing base64 (gzip compressed) is not supported.");
         return null;
     }
 
     function getTilesFromBase64ZLib(layerData : String) : Array<TiledTile> {
         var parsedTiles = new Array<TiledTile>();
-        var base = new haxe.crypto.BaseCode(haxe.io.Bytes.ofString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"));
-        var data = StringTools.trim(layerData);
-        while( data.charCodeAt(data.length-1) == "=".code ) {
-            data = data.substr(0, data.length - 1);
-        }
-
-        var bytes = haxe.io.Bytes.ofString(data);
-        var bytes = base.decodeBytes(bytes);
-        bytes = format.tools.Inflate.run(bytes);
-        var input = new haxe.io.BytesInput(bytes);
+        
+        var bytes = decodeBase64String(layerData);
+        bytes = Inflate.run(bytes);
+        var input = new BytesInput(bytes);
+        
         for( i in 0...bytes.length >> 2 ) {
             parsedTiles.push(new TiledTile(input.readInt32()));
         }
     
         return parsedTiles;
+    }
+
+    private function decodeBase64String(base64String : String) : Bytes {
+        var data = StringTools.trim(base64String);
+        while( data.charCodeAt(data.length-1) == "=".code ) {
+            data = data.substr(0, data.length - 1);
+        }
+
+        var bytes = Bytes.ofString(data);
+        var base = new haxe.crypto.BaseCode(Bytes.ofString(Base64.CHARS));
+        var bytes = base.decodeBytes(bytes);
+        
+        return bytes;
     }
 
     function get_encoding() {

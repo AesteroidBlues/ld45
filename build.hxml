@@ -13,7 +13,7 @@
 -cp src
 -js bin/web/main.js
 
-
+-debug
 
 -lib heaps
 -lib hxmath

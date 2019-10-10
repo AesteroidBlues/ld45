@@ -12,7 +12,7 @@ class TiledTileset {
     public var columns(get, null) : Int;
 
     public var image(get, null) : String;
-    public var tiles : Map<Int, TiledTile>;
+    public var tiles(get, null) : Map<Int, TiledTile>;
 
     public function new(xml : Xml) {
         tiles = new Map<Int, TiledTile>();
@@ -96,5 +96,9 @@ class TiledTileset {
 
     private function get_image() {
         return this.image;
+    }
+
+    private function get_tiles() {
+        return this.tiles;
     }
 }
