@@ -1,8 +1,9 @@
 package jtk;
 
-import h2d.Object;
 import h2d.Scene;
-class GameState extends Scene {
+import jtk.IState;
+
+class GameState extends Scene implements IState {
 
     var game : Game;
 
@@ -17,12 +18,14 @@ class GameState extends Scene {
     }
 
     public function update(dt : Float) {
-    }
-
-    public function onExit() {
+        for (updatable in this.updatables) {
+            updatable.update(dt);
+        }
     }
 
     public function onEnter() { }
+
+    public function onExit() { }
 
     private function get_updatables() {
         return this.updatables;

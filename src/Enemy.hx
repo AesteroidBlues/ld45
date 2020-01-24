@@ -1,3 +1,4 @@
+import hxmath.math.Vector2;
 import h2d.col.Point;
 import h2d.Drawable;
 import h2d.Bitmap;
@@ -91,20 +92,20 @@ class Enemy extends Entity {
                 }
             }
             else {
-                var dirToPlayer = new Point(game.player.x - this.x, game.player.y - this.y);
-                LookAt(dirToPlayer.x, dirToPlayer.y);
-                if (weapon.canAttack && dirToPlayer.length() < 150) {
+                var dirToPlayer = new Vector2(game.player.x - this.x, game.player.y - this.y);
+                LookAt(dirToPlayer);
+                if (weapon.canAttack && dirToPlayer.length < 150) {
                     weapon.attack(this, game.player);
                 }
             }
         }
 
         if (this.target != null) {
-            var distToTarget = new Point(target.x - this.x, target.y - this.y);
-            if (distToTarget.length() < 25) {
+            var distToTarget = new Vector2(target.x - this.x, target.y - this.y);
+            if (distToTarget.length < 25) {
                 path = [];
                 distToTarget.normalize();
-                LookAt(distToTarget.x, distToTarget.y);
+                LookAt(distToTarget);
                 this.x += distToTarget.x * dt * this.speed;
                 this.y += distToTarget.y * dt * this.speed;
             }
@@ -113,8 +114,9 @@ class Enemy extends Entity {
         if (path.length > 0) {
             var faceX = (path[0].x * MyGameState.TILE_SIZE) - this.x;
             var faceY = (path[0].y * MyGameState.TILE_SIZE) - this.y;
+            var face = new Vector2(faceX, faceY);
 
-            LookAt(faceX, faceY);
+            LookAt(face);
             var vec = new Point(faceX, faceY);
             if (vec.length() < 1) {
                 this.path.shift();
@@ -163,7 +165,7 @@ class Enemy extends Entity {
         for (p in this.game.pickups) {
             if (spriteBounds.intersects(p.getBounds(this.game.camera))) {
                 if (weapon == null) {
-                    game.switchMusic(game.enemyWeaponMusic);
+                    // game.switchMusic(game.enemyWeaponMusic);
                 }
 
                 p.onPickup(this);

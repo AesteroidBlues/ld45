@@ -36,11 +36,11 @@ class MyGameState extends GameState {
 
         this.scaleMode = Stretch(240, 160);
 
-        startMusic = hxd.Res.spook2;
-        playerWeaponFirstMusic = hxd.Res.spook;
-        enemyWeaponMusic = hxd.Res.combat;
+        // startMusic = hxd.Res.spook2;
+        // playerWeaponFirstMusic = hxd.Res.spook;
+        // enemyWeaponMusic = hxd.Res.combat;
 
-        switchMusic(startMusic);
+        // switchMusic(startMusic);
 
 
         pickups = new Array<Powerup>();
@@ -77,9 +77,9 @@ class MyGameState extends GameState {
         this.player.x = playerStart.x;
         this.player.y = playerStart.y;
 
-        this.enemy = new Enemy(camera, this);
-        this.enemy.x = enemyStart.x;
-        this.enemy.y = enemyStart.y;
+        // this.enemy = new Enemy(camera, this);
+        // this.enemy.x = enemyStart.x;
+        // this.enemy.y = enemyStart.y;
 
         moveCamera(Math.floor(player.x / (ROOM_WIDTH * TILE_SIZE)), 
         Math.floor(player.y / (ROOM_HEIGHT * TILE_SIZE)));
@@ -130,5 +130,8 @@ class MyGameState extends GameState {
         for (u in this.updatables) {
             u.update(dt);
         }
+
+        moveCamera(Math.floor(player.x / (ROOM_WIDTH * TILE_SIZE)), 
+            Math.floor(player.y / (ROOM_HEIGHT * TILE_SIZE)));
     }
 }

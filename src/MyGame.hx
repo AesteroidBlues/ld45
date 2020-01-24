@@ -6,6 +6,6 @@ class MyGame extends Game {
         super(app);
 
         this.states.set("game", new MyGameState(this));
-        this.changeState(this.states["game"]);
+        this.changeState(this.states.get("game"));
     }
 }

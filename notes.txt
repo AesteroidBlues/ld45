@@ -1,0 +1,12 @@
+TODO
+
+follow camera
+camera easing
+entities use vectors
+    - complicated by the fact heaps uses x and y for its own positioning 
+component system?
+    - inter-component messaging
+convert ai logic to use AST
+
+DONE
+abstract state machine
