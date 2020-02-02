@@ -2,10 +2,6 @@ package jtk.components;
 
 import h2d.Drawable;
 
-class Component {
-    private var entity : Drawable;
-
-    public function new(drawable : Drawable) {
-        this.entity = drawable;
-    }
+interface Component {
+    public function update(dt : Float, entity : Entity) : Void;
 }

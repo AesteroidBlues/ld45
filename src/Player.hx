@@ -1,18 +1,15 @@
-import hxd.clipper.Rect;
-import h2d.col.Point;
-import h2d.Drawable;
 import h2d.Bitmap;
 import h2d.Tile;
 import h2d.Object;
 import hxd.Key;
 import h2d.Graphics;
 
+import components.KeyboardMoveComponent;
+
 import hxmath.math.Vector2;
 
 class Player extends Entity {
     public var sprite : Tile;
-
-    public var speed : Float = 48.0  * 2;
 
     private var mouseX : Float;
     private var mouseY : Float;
@@ -26,6 +23,7 @@ class Player extends Entity {
         sprite.setCenterRatio();
         var bitmap = new Bitmap(sprite, this);
         
+        main.subscribeToComponent(KeyboardMoveComponent, this);
 
         this.graphics = new Graphics(this.game.camera);
     }
@@ -39,27 +37,14 @@ class Player extends Entity {
             return;
         }
 
-        var p = new Point();
-        if (Key.isDown(Key.W)) {
-            p.y -= this.speed * dt;
-        }
-        if (Key.isDown(Key.S)) {
-            p.y += this.speed * dt;
-        }
-        if (Key.isDown(Key.A)) {
-            p.x -= this.speed * dt;
-        }
-        if (Key.isDown(Key.D)) {
-            p.x += this.speed * dt;
-        }
+        
 
         var mouseWorldSpace = this.game.camera.screenToWorldSpace(this.game.mouseX, this.game.mouseY);
         var lookTarget = new Vector2(mouseWorldSpace.x - this.x, mouseWorldSpace.y - this.y);
-        LookAt(lookTarget);
 
         var spriteBounds = new h2d.col.Bounds();
-        spriteBounds.x = this.x + p.x - 8;
-        spriteBounds.y = this.y + p.y - 8;
+        // spriteBounds.x = this.x + p.x - 8;
+        // spriteBounds.y = this.y + p.y - 8;
         spriteBounds.width = sprite.width;
         spriteBounds.height = sprite.height;
 
@@ -74,9 +59,6 @@ class Player extends Entity {
                 return;
             }
         }
-
-        this.x += p.x;
-        this.y += p.y;
 
         // for (obj in this.game.map.objects["transition"].objects) {
         //     var bounds = new h2d.col.Bounds();
@@ -115,5 +97,7 @@ class Player extends Entity {
         if (Key.isPressed(Key.SPACE) && weapon != null) {
             this.weapon.attack(this, game.enemy);
         }
+
+        super.update(dt);
     }
 }

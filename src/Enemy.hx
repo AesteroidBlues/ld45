@@ -16,8 +16,6 @@ enum AiState {
 class Enemy extends Entity {
     public var sprite : Tile;
 
-    public var speed : Float = 48.0;
-
     var state : AiState;
     var target : Drawable;
     var path : Array<Point>;
@@ -93,7 +91,7 @@ class Enemy extends Entity {
             }
             else {
                 var dirToPlayer = new Vector2(game.player.x - this.x, game.player.y - this.y);
-                LookAt(dirToPlayer);
+                
                 if (weapon.canAttack && dirToPlayer.length < 150) {
                     weapon.attack(this, game.player);
                 }
@@ -105,7 +103,7 @@ class Enemy extends Entity {
             if (distToTarget.length < 25) {
                 path = [];
                 distToTarget.normalize();
-                LookAt(distToTarget);
+                
                 this.x += distToTarget.x * dt * this.speed;
                 this.y += distToTarget.y * dt * this.speed;
             }
@@ -116,7 +114,7 @@ class Enemy extends Entity {
             var faceY = (path[0].y * MyGameState.TILE_SIZE) - this.y;
             var face = new Vector2(faceX, faceY);
 
-            LookAt(face);
+            
             var vec = new Point(faceX, faceY);
             if (vec.length() < 1) {
                 this.path.shift();

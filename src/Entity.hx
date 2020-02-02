@@ -1,4 +1,5 @@
 
+import hxmath.math.Vector2;
 import h2d.Object;
 import h2d.Drawable;
 
@@ -9,9 +10,13 @@ class Entity extends Drawable {
     public var weapon : Weapon;
     public var hasArmor : Bool;
 
+    public var speed : Float = 48.0  * 2;
+
     public var game : MyGameState;
     public var dead : Bool = false;
     public var deathTimer : Float = 0.5;
+
+    public var position : Vector2;
 
     var onDeath : () -> Void;
 
@@ -21,6 +26,8 @@ class Entity extends Drawable {
         this.game = game;
 
         this.health = MAX_HEALTH;
+
+        position = new Vector2(0, 0);
 
         weapon = null;
         hasArmor = false;
@@ -48,7 +55,10 @@ class Entity extends Drawable {
         game.updatables.remove(this);
     }
 
-    public function update(dt : Float) { }
+    public function update(dt : Float) {
+        this.x = position.x;
+        this.y = position.y;
+    }
 
     public function lateUpdate(dt : Float) { }
 }

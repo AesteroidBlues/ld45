@@ -74,8 +74,8 @@ class MyGameState extends GameState {
         }
 
         this.player = new Player(camera, this);
-        this.player.x = playerStart.x;
-        this.player.y = playerStart.y;
+        this.player.position.x = playerStart.x;
+        this.player.position.y = playerStart.y;
 
         // this.enemy = new Enemy(camera, this);
         // this.enemy.x = enemyStart.x;
@@ -127,9 +127,7 @@ class MyGameState extends GameState {
     }
     
     public override function update(dt:Float) {
-        for (u in this.updatables) {
-            u.update(dt);
-        }
+        super.update(dt);
 
         moveCamera(Math.floor(player.x / (ROOM_WIDTH * TILE_SIZE)), 
             Math.floor(player.y / (ROOM_HEIGHT * TILE_SIZE)));
